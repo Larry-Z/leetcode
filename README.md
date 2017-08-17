@@ -1,3 +1,4 @@
 ### leetcode problem solutions with golang
 
-[src/kthSmallest.go](230. Kth Smallest Element in a BST)
+### Tree Topic
+[230. Kth Smallest Element in a BST](src/kthSmallest.go)
