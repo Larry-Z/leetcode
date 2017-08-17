@@ -1,4 +1,4 @@
-package src
+package main
 
 func sortedArrayToBST(nums []int) *TreeNode {
 	if len(nums) == 0 {

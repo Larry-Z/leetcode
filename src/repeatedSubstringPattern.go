@@ -1,4 +1,4 @@
-package src
+package main
 
 func repeatedSubstringPattern(s string) bool {
 	next := make([]int, len(s))
