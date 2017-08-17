@@ -15,18 +15,18 @@ func kthSmallest(root *TreeNode, k int) int {
 		}
 		root = stack[len(stack)-1]
 		stack = stack[:len(stack)-1]
-        if i == k {
-            return root.Val
-        }
-        i++
-        root = root.Right
+		if i == k {
+			return root.Val
+		}
+		i++
+		root = root.Right
 	}
-    return -1
+	return -1
 }
 
 func main() {
-    list := "20,16,23,14,18,21,25,null,15,17,null";
-    root := listToTree(list)
-    printTreePretty(root, 0)
-    fmt.Println(kthSmallest(root, 4))
+	list := "20,16,23,14,18,21,25,null,15,17,null"
+	root := listToTree(list)
+	printTreePretty(root, 0)
+	fmt.Println(kthSmallest(root, 4))
 }
