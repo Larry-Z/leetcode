@@ -43,16 +43,16 @@ func printTree(root *TreeNode) {
 	printTree(root.Right)
 }
 
-func printTreePretty(root *TreeNode, indent int)  {
-    if root == nil {
-        return
-    }
-    printTreePretty(root.Right, indent+4)
-    for i:=0; i<indent; i++ {
-        fmt.Print(" ")
-    }
-    fmt.Printf("%d\n", root.Val)
-    printTreePretty(root.Left, indent+4)
+func printTreePretty(root *TreeNode, indent int) {
+	if root == nil {
+		return
+	}
+	printTreePretty(root.Right, indent+4)
+	for i := 0; i < indent; i++ {
+		fmt.Print(" ")
+	}
+	fmt.Printf("%d\n", root.Val)
+	printTreePretty(root.Left, indent+4)
 }
 
 func listToTree(str string) *TreeNode {
@@ -66,7 +66,7 @@ func listToTree(str string) *TreeNode {
 	for len(q) > 0 {
 		size := len(q)
 		for j := 0; j < size; j++ {
-			if i >= len(list) || i+1 >= len(list){
+			if i >= len(list) || i+1 >= len(list) {
 				break
 			}
 			if q[j] != nil {
@@ -80,8 +80,8 @@ func listToTree(str string) *TreeNode {
 				}
 				q = append(q, q[j].Left, q[j].Right)
 			} else {
-                q = append(q, nil, nil)
-            }
+				q = append(q, nil, nil)
+			}
 
 			i += 2
 		}
