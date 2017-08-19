@@ -7,6 +7,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"bytes"
 )
 
 type ListNode struct {
@@ -24,6 +25,29 @@ func printList(l *ListNode) {
 		l = l.Next
 	}
 	fmt.Println("")
+}
+
+func twoSum(nums []int, target int) []int {
+	m := make(map[int][]int, len(nums))
+	for i, val := range nums {
+		if index, ok := m[val]; ok {
+			m[val] = append(index, i)
+		} else {
+			m[val] = []int{i}
+		}
+	}
+	for key, val := range m {
+		d := target - key
+		if v, ok := m[d]; ok {
+			if d == key && len(v) > 1 {
+				return v[0:2]
+			}
+			if d != key {
+				return []int{val[0], v[0]}
+			}
+		}
+	}
+	return nil
 }
 
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
@@ -1880,6 +1904,549 @@ func deleteNode(root *TreeNode, key int) *TreeNode {
 		return nil
 	}
 	return nil
+}
+
+func lengthOfLongestSubstring(s string) int {
+	m := make([]int, 256, 256)
+	ret := 0
+	for i, j := 0, 0; j < len(s); j++ {
+		ch := s[j]
+		i = max(i, m[ch])
+		ret = max(ret, j-i+1)
+		m[int(ch)] = j + 1
+		fmt.Println(m['a'], i, j, j-i+1)
+	}
+
+	return ret
+}
+
+func myPow(x float64, n int) float64 {
+	a := n
+	if n < 0 {
+		a = -n
+	}
+	if n == 0 {
+		return 1
+	}
+	var ret float64
+	if a%2 == 0 {
+		ret = myPow(x*x, a/2)
+
+	} else {
+		ret = x * myPow(x*x, (a-1)/2)
+	}
+	if n < 0 {
+		return 1 / ret
+	}
+	return ret
+}
+
+func mySqrt(x int) int {
+	ret := 1.0
+	if x == 1 {
+		return 1
+	}
+	if x == 0 {
+		return 0
+	}
+	for math.Abs(ret*ret-float64(x)) > 0.0001 {
+		ret = ret/2 + float64(x)/2/ret
+		fmt.Println(ret)
+	}
+	return int(ret)
+}
+
+func plusOne(digits []int) []int {
+	last := 1
+	l := len(digits)
+	ret := make([]int, l+1)
+	for i := l - 1; i >= 0; i-- {
+		s := digits[i] + last
+		if s == 10 {
+			last = 1
+			ret[i+1] = s - 10
+		} else {
+			last = 0
+			ret[i+1] = s
+		}
+	}
+	if last == 1 {
+		ret[0] = 1
+		return ret
+	}
+	return ret[1:]
+}
+
+func searchInsert(nums []int, target int) int {
+	begin := 0
+	end := len(nums) - 1
+	if len(nums) == 1 {
+		if target > nums[0] {
+			return 1
+		}
+		return 0
+	}
+	for begin <= end {
+
+		mid := begin + (end-begin)/2
+		fmt.Printf("begin=%d,end=%d,mid=%d\n", begin, end, mid)
+		if nums[mid] == target {
+			return mid
+		}
+		if nums[mid] < target {
+			begin = mid + 1
+		} else {
+			end = mid - 1
+		}
+	}
+	return begin
+}
+
+
+
+func findComplement(num int) int {
+	for a := 1; a < num; a <<= 1 {
+		num ^= a
+	}
+	return num
+}
+
+func findWords(words []string) []string {
+	s1 := "qwertyuiop"
+	s2 := "asdfghjkl"
+	s3 := "zxcvbnm"
+
+	m1 := make(map[rune]bool, len(s1))
+	m2 := make(map[rune]bool, len(s2))
+	m3 := make(map[rune]bool, len(s3))
+
+	m := make(map[rune](*map[rune]bool), 26)
+
+	for _, ch := range s1 {
+		m1[ch] = true
+		m[ch] = &m1
+	}
+	for _, ch := range s2 {
+		m2[ch] = true
+		m[ch] = &m2
+	}
+	for _, ch := range s3 {
+		m3[ch] = true
+		m[ch] = &m3
+	}
+	ret := make([]string, 0, len(words))
+	for _, s := range words {
+		ch := rune(s[0])
+		if ch < 'a' {
+			ch = ch + 32
+		}
+		chMap := *m[ch]
+		flag := true
+		for _, c := range s {
+			if c < 'a' {
+				c += 32
+			}
+			if _, ok := chMap[c]; !ok {
+				flag = false
+				break
+			}
+		}
+		if flag {
+			ret = append(ret, s)
+		}
+	}
+	return ret
+}
+
+func reverseWords(s string) string {
+	j := 0
+	var b bytes.Buffer
+	for k, ch := range s {
+		if ch == ' ' {
+			for x := k - 1; x >= j; x-- {
+				b.WriteByte(s[x])
+			}
+			b.WriteRune(' ')
+			j = k + 1
+		}
+	}
+	for x := len(s) - 1; x >= j; x-- {
+		b.WriteByte(s[x])
+	}
+	return b.String()
+}
+
+func matrixReshape(nums [][]int, r int, c int) [][]int {
+	r0, c0 := len(nums), len(nums[0])
+	if r0*c0 != r*c {
+		return nums
+	}
+	ret := make([][]int, r)
+	for i := 0; i < r; i++ {
+		ret[i] = make([]int, c)
+	}
+	for i := 0; i < c0*r0; i++ {
+		ret[i/c][i%c] = nums[i/c0][i%c0]
+	}
+	return ret
+}
+
+func distributeCandies(candies []int) int {
+	m := make([]int, 200001)
+	c := 0
+	for _, val := range candies {
+		val += 100000
+		if m[val] == 0 {
+			c++
+		}
+		if c == len(candies)/2 {
+			return c
+		}
+		m[val] += 1
+	}
+	return c
+}
+
+func reverseString(s string) string {
+	ret := make([]byte, len(s))
+	for i := 0; i < len(s); i++ {
+		ret[i] = s[len(s)-i-1]
+	}
+	return string(ret)
+}
+
+func fizzBuzz(n int) []string {
+	ret := make([]string, n)
+	for i := 1; i <= n; i++ {
+		s := strconv.Itoa(i)
+		if i%3 == 0 {
+			s = "Fizz"
+		}
+		if i%5 == 0 {
+			s = "Buzz"
+		}
+		if i%15 == 0 {
+			s = "FizzBuzz"
+		}
+		ret[i-1] = s
+	}
+	return ret
+}
+
+
+func levelInfo(root *TreeNode, info *map[int][]float64, level int) {
+	if root == nil {
+		return
+	}
+	m := *info
+	if _, ok := m[level]; !ok {
+		m[level] = make([]float64, 2)
+	}
+	(*info)[level][0] += float64(root.Val)
+	(*info)[level][1]++
+	level++
+	levelInfo(root.Left, info, level)
+	levelInfo(root.Right, info, level)
+}
+
+func averageOfLevels(root *TreeNode) []float64 {
+	info := make(map[int][]float64)
+	levelInfo(root, &info, 0)
+	ret := make([]float64, len(info))
+	for i := 0; i < len(ret); i++ {
+		ret[i] = info[i][0] / info[i][1]
+	}
+	return ret
+}
+
+func testAverageLevel() {
+	n := TreeNode{Val: 10}
+	n.Left = &TreeNode{Val: 5}
+	n.Right = &TreeNode{Val: 2}
+	n.Left.Left = &TreeNode{Val: 5}
+	n.Right.Right = &TreeNode{Val: 55}
+	n.Right.Right.Right = &TreeNode{Val: 32}
+	n.Right.Right.Right.Left = &TreeNode{Val: 12}
+	fmt.Println(averageOfLevels(&n))
+}
+
+func islandPerimeter(grid [][]int) int {
+	ret := 0
+	for i, row := range grid {
+		for j, cel := range row {
+			if cel == 1 {
+				//up
+				if i-1 < 0 {
+					ret++
+				} else {
+					if grid[i-1][j] == 0 {
+						ret++
+					}
+				}
+				//left
+				if j-1 < 0 {
+					ret++
+				} else {
+					if grid[i][j-1] == 0 {
+						ret++
+					}
+				}
+				//down
+				if i+1 == len(grid) {
+					ret++
+				} else {
+					if grid[i+1][j] == 0 {
+						ret++
+					}
+				}
+				//right
+				if j+1 == len(row) {
+					ret++
+				} else {
+					if grid[i][j+1] == 0 {
+						ret++
+					}
+				}
+			}
+		}
+	}
+	return ret
+}
+
+func nextGreaterElement(findNums []int, nums []int) []int {
+	l := list.New()
+	m := make(map[int]int, len(nums))
+	for _, v := range nums {
+		for l.Len() > 0 {
+			f := l.Back()
+			if f.Value.(int) < v {
+				m[f.Value.(int)] = v
+				l.Remove(f)
+			} else {
+				break
+			}
+		}
+		l.PushBack(v)
+	}
+	fmt.Println(m)
+	ret := make([]int, len(findNums))
+	for k, v := range findNums {
+		if b, ok := m[v]; ok {
+			ret[k] = b
+		} else {
+			ret[k] = -1
+		}
+	}
+	return ret
+}
+
+var winMap map[int]bool
+
+func canWinNimRun(n int) bool {
+	if n == 1 {
+		winMap[n] = true
+		return true
+	}
+	if n == 2 {
+		winMap[n] = true
+		return true
+	}
+	if n == 3 {
+		winMap[n] = true
+		return true
+	}
+
+	a := make([]bool, 3)
+	for k, _ := range a {
+		if c, ok := winMap[n-k-1]; ok {
+			a[k] = c
+		} else {
+			a[k] = canWinNimRun(n - k - 1)
+		}
+	}
+	ret := !a[0] || !a[1] || !a[2]
+	winMap[n] = ret
+	return ret
+}
+
+func canWinNim(n int) bool {
+	return n%4 != 0
+}
+
+func invertTree(root *TreeNode) *TreeNode {
+	if root == nil {
+		return nil
+	}
+	q := list.New()
+	q.PushBack(root)
+	for q.Len() > 0 {
+		cur := q.Front().Value.(*TreeNode)
+		q.Remove(q.Front())
+		cur.Left, cur.Right = cur.Right, cur.Left
+		if cur.Left != nil {
+			q.PushBack(cur.Left)
+		}
+		if cur.Right != nil {
+			q.PushBack(cur.Right)
+		}
+	}
+	return root
+}
+
+func convertBST2(root *TreeNode, sum *int) {
+	if root == nil {
+		return
+	}
+	convertBST2(root.Right, sum)
+	root.Val += *sum
+	fmt.Println("root.val", root.Val)
+	*sum = root.Val
+	convertBST2(root.Left, sum)
+}
+
+func convertBST(root *TreeNode) *TreeNode {
+	s := 0
+	convertBST2(root, &s)
+	return root
+}
+
+
+func getSum(a int, b int) int {
+	x, y := 1, 1
+	for y != 0 {
+		x = a ^ b
+		y = a & b << 1
+		a, b = x, y
+	}
+	return x
+}
+
+func addDigits(num int) int {
+	if num == 0 {
+		return 0
+	}
+	m := num % 9
+	if m == 0 {
+		m = 9
+	}
+	return m
+}
+
+func tree2str2(t *TreeNode, buf *bytes.Buffer) {
+	if t == nil {
+		return
+	}
+	buf.WriteString(strconv.Itoa(t.Val))
+
+	if t.Left == nil && t.Right == nil {
+		return
+	}
+	buf.WriteRune('(')
+	tree2str2(t.Left, buf)
+	buf.WriteRune(')')
+	if t.Right != nil {
+		buf.WriteRune('(')
+		tree2str2(t.Right, buf)
+		buf.WriteRune(')')
+	}
+}
+
+func tree2str(t *TreeNode) string {
+	buf := &bytes.Buffer{}
+	tree2str2(t, buf)
+	return buf.String()
+}
+
+func findTheDifference(s string, t string) byte {
+	var ret byte
+	i := 0
+	for i = 0; i < len(s); i++ {
+		ret ^= s[i] ^ t[i]
+	}
+	ret ^= t[i]
+	return ret
+}
+
+func moveZeroes(nums []int) {
+	c := 0
+	for k, v := range nums {
+		if v != 0 {
+			nums[c] = v
+			if c != k {
+				nums[k] = 0
+			}
+			c++
+		}
+	}
+}
+
+func constructRectangle(area int) []int {
+
+	mid := int(math.Sqrt(float64(area)))
+	if mid*mid == area {
+		return []int{mid, mid}
+	}
+	for mid++; mid <= area; mid++ {
+		if area%mid == 0 {
+			return []int{mid, area / mid}
+		}
+	}
+	return []int{0, 0}
+}
+
+
+func maxCount(m int, n int, ops [][]int) int {
+	if len(ops) == 0 {
+		return m * n
+	}
+	row, col := 40001, 40001
+	for _, v := range ops {
+		row, col = min(v[0], row), min(v[1], col)
+	}
+	return row * col
+}
+
+func findRestaurant(list1 []string, list2 []string) []string {
+	if len(list1) == 0 || len(list2) == 0 {
+		return []string{}
+	}
+	m := make(map[string]int)
+	for k, v := range list1 {
+		if _, ok := m[v]; !ok {
+			m[v] = k
+		}
+	}
+	sum := math.MaxInt64
+	retMap := make(map[int][]string)
+	for k, v := range list2 {
+		if idx, ok := m[v]; ok {
+			if k+idx < sum {
+				sum = k + idx
+				if arr, ok := retMap[sum]; ok {
+					arr = append(arr, v)
+					retMap[sum] = arr
+				} else {
+					retMap[sum] = []string{v}
+				}
+			} else if k+idx == sum {
+				arr := retMap[sum]
+				retMap[sum] = append(arr, v)
+			}
+		}
+	}
+	return retMap[sum]
+}
+
+func minMoves(nums []int) int {
+	sum := 0
+	min := math.MaxInt64
+	for _, v := range (nums) {
+		sum += v
+		if v < min {
+			min = v
+		}
+	}
+	return sum - min*len(nums)
 }
 
 func main() {
