@@ -7,6 +7,7 @@ func postorderTraversal(root *TreeNode) []int {
 		return nil
 	}
 	ret := []int{}
+	// helper node to record the node has send it's children
 	type Node struct {
 		node *TreeNode
 		top  bool
