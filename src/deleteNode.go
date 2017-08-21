@@ -2,20 +2,20 @@ package main
 
 import "fmt"
 
-func delTreeNode (node *TreeNode) *TreeNode {
-    if node == nil {
-        return nil
-    }
-    if node.Left == nil {
-        return node.Right
-    }
-    n := node.Left
+func delTreeNode(node *TreeNode) *TreeNode {
+	if node == nil {
+		return nil
+	}
+	if node.Left == nil {
+		return node.Right
+	}
+	n := node.Left
 
-    for n.Right != nil {
-        n = n.Right
-    }
-    n.Right = node.Right
-    return node.Left
+	for n.Right != nil {
+		n = n.Right
+	}
+	n.Right = node.Right
+	return node.Left
 
 }
 func deleteNode(root *TreeNode, key int) *TreeNode {

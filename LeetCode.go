@@ -1,13 +1,13 @@
 package main
 
 import (
+	"bytes"
 	"container/list"
 	"fmt"
 	"math"
 	"sort"
 	"strconv"
 	"strings"
-	"bytes"
 )
 
 type ListNode struct {
@@ -2002,8 +2002,6 @@ func searchInsert(nums []int, target int) int {
 	return begin
 }
 
-
-
 func findComplement(num int) int {
 	for a := 1; a < num; a <<= 1 {
 		num ^= a
@@ -2132,7 +2130,6 @@ func fizzBuzz(n int) []string {
 	}
 	return ret
 }
-
 
 func levelInfo(root *TreeNode, info *map[int][]float64, level int) {
 	if root == nil {
@@ -2310,7 +2307,6 @@ func convertBST(root *TreeNode) *TreeNode {
 	return root
 }
 
-
 func getSum(a int, b int) int {
 	x, y := 1, 1
 	for y != 0 {
@@ -2394,7 +2390,6 @@ func constructRectangle(area int) []int {
 	return []int{0, 0}
 }
 
-
 func maxCount(m int, n int, ops [][]int) int {
 	if len(ops) == 0 {
 		return m * n
@@ -2440,7 +2435,7 @@ func findRestaurant(list1 []string, list2 []string) []string {
 func minMoves(nums []int) int {
 	sum := 0
 	min := math.MaxInt64
-	for _, v := range (nums) {
+	for _, v := range nums {
 		sum += v
 		if v < min {
 			min = v
