@@ -25,11 +25,11 @@ func levelOrder(root *TreeNode) [][]int {
 		}
 		q = q[size:]
 	}
-    return ret;
+	return ret
 }
 
 func main() {
-    root := listToTree("3,9,20,null,null,15,7")
-    printTreePretty(root, 0)
-    fmt.Println(levelOrder(root))
+	root := listToTree("3,9,20,null,null,15,7")
+	printTreePretty(root, 0)
+	fmt.Println(levelOrder(root))
 }
