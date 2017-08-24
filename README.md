@@ -8,3 +8,4 @@
 * [Binary Tree Preorder Traversal](src/preorderTraversal.go)
 * [Sum Root to Leaf Numbers](src/sumNumbers.go)
 * [Maximum Width of Binary Tree](src/widthOfBinaryTree.go)
+* [Validate Binary Search Tree](src/isValidBST.go)
