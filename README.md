@@ -13,4 +13,4 @@
 * [94. Binary Tree Inorder Traversal](src/inorderTraversal.go)
 ### Linked List
 * [147. Insertion Sort List](src/insertionSortList.go)
-
+* [148. Sort List](src/sortList.go)
