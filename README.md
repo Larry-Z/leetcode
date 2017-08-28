@@ -17,3 +17,4 @@
 * [86. Partition List](src/partition.go)
 * [add two numbers](src/addTwoNumbers.go)
 * [Reorder List](src/reorderList.go)
+* [Convert Sorted List to Binary Search Tree](src/sortedListToBST.go)
