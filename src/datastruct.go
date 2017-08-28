@@ -42,6 +42,19 @@ func printLinkList(head *ListNode) {
 	fmt.Printf("\n")
 }
 
+func sliceToList(arr []int) *ListNode {
+	if len(arr) == 0 {
+		return nil
+	}
+	head := &ListNode{Val: arr[0]}
+	p := head
+	for i := 1; i < len(arr); i++ {
+		p.Next = &ListNode{Val: arr[i]}
+        p = p.Next
+	}
+    return head
+}
+
 func printTree(root *TreeNode) {
 	if root == nil {
 		return
