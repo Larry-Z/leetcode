@@ -14,3 +14,4 @@
 ### Linked List
 * [147. Insertion Sort List](src/insertionSortList.go)
 * [148. Sort List](src/sortList.go)
+* [86. Partition List](src/partition.go)
