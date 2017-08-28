@@ -17,18 +17,26 @@ type ListNode struct {
 	Next *ListNode
 }
 
+func sliceToList(arr []int) *ListNode {
+	if len(arr) == 0 {
+		return nil
+	}
+	head := &ListNode{Val: arr[0]}
+	p := head
+	for i := 1; i < len(arr); i++ {
+		p.Next = &ListNode{Val: arr[i]}
+		p = p.Next
+	}
+	return head
+}
+
 func printLinkList(head *ListNode) {
-	i := 0
 	for head != nil {
-		if i == 50 {
-			return
-		}
 		if head.Next == nil {
 			fmt.Printf("%d", head.Val)
 		} else {
 			fmt.Printf("%d->", head.Val)
 		}
-		i++
 		head = head.Next
 	}
 	fmt.Printf("\n")
