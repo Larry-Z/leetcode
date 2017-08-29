@@ -19,3 +19,4 @@
 * [Reorder List](src/reorderList.go)
 * [Convert Sorted List to Binary Search Tree](src/sortedListToBST.go)
 * [Remove Nth Node From End of List](src/removeNthFromEnd.go)
+* [Remove Duplicates from Sorted List II](src/deleteDuplicates.go)
