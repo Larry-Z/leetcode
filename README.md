@@ -22,3 +22,4 @@
 * [Remove Duplicates from Sorted List II](src/deleteDuplicates.go)
 * [Reverse Linked List II](src/reverseBetween.go)
 * [Rotate List](src/rotateRight.go)
+* [Merge k Sorted Lists](src/mergeKLists.go)
