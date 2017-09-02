@@ -24,3 +24,5 @@
 * [Rotate List](src/rotateRight.go)
 * [Merge k Sorted Lists](src/mergeKLists.go)
 * [Reverse Nodes in k-Group](src/reverseKGroup.go)
+### Stack
+* [Simplify Path](src/simplifyPath.go)
